@@ -1,0 +1,29 @@
+version: '3'
+services:
+  discovery-service:
+    build: ./discovery-service
+    ports:
+      - "8761:8761"
+  gateway-service:
+    build: ./gateway-service
+    ports:
+      - "8083:8083"
+  config-service:
+    build: ./config-service
+    ports:
+      - "8888:8888"
+  keynote-service:
+    build: ./keynote-service
+    ports:
+      - "8081:8081"
+  conference-service:
+    build: ./conference-service
+    ports:
+      - "8082:8082"
+  keycloak:
+    image: jboss/keycloak:latest
+    ports:
+      - "8080:8080"
+    environment:
+      - KEYCLOAK_USER=admin
+      - KEYCLOAK_PASSWORD=admin

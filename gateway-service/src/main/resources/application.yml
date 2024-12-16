@@ -1,0 +1,31 @@
+server:
+  port: 8083
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      routes:
+        - id: keynote-service
+          uri: http://keynote-service:8081
+          predicates:
+            - Path=/keynote-service/**
+          filters:
+              - RewritePath=/keynote-service/(?<segment>.*), /${segment}
+        - id: conference-service
+          uri: http://conference-service:8082
+          predicates:
+            - Path=/conference-service/**
+          filters:
+            - RewritePath=/conference-service/(?<segment>.*), /${segment}
+
